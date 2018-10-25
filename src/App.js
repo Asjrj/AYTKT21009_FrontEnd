@@ -1,5 +1,6 @@
 import React from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -10,7 +11,11 @@ class App extends React.Component {
       username: '',
       password: '',
       blogs: [],
-      user: null
+      user: null,
+      newTitle: '',
+      newAuthor: '',
+      newUrl: '',
+      error: null
     }
   }
 
@@ -22,9 +27,7 @@ class App extends React.Component {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       this.setState({ user })
-
     }
-
   }
 
   login = async (event) => {
@@ -37,9 +40,7 @@ class App extends React.Component {
       this.setState({ username: '', password: '', user })
       window.localStorage.setItem('blogUser', JSON.stringify(user))
     } catch (exception) {
-      this.setState({
-        error: 'Invalid username or password',
-      })
+      this.setState({ error: 'Invalid username or password' })
       setTimeout(() => {
         this.setState({ error: null })
       }, 5000)
@@ -50,6 +51,64 @@ class App extends React.Component {
     event.preventDefault()
     window.localStorage.removeItem('blogUser')
     window.location.reload()
+  }
+
+  handleTitleChange = () => {
+    return (event) => {
+      event.preventDefault()
+      this.setState({ newTitle: event.target.value })
+    }
+  }
+
+  handleAuthorChange = () => {
+    return (event) => {
+      event.preventDefault()
+      this.setState({ newAuthor: event.target.value })
+    }
+  }
+
+  handleUrlChange = () => {
+    return (event) => {
+      event.preventDefault()
+      this.setState({ newUrl: event.target.value })
+    }
+  }
+
+  handleCreate = () => {
+    return async (event) => {
+      event.preventDefault()
+      if (this.state.newTitle === '' || this.state.newAuthor === '' || this.state.newUrl === '') {
+        this.setState({ error: 'Title, author and url must be given' })
+        setTimeout(() => {
+          this.setState({ error: null })
+        }, 5000)
+        return
+      }
+
+      const newBlog = {
+        id: "123",
+        title: this.state.newTitle,
+        author: this.state.newAuthor,
+        url: this.state.newUrl
+      }
+      try {
+        let data = await blogService.addBlog(newBlog, this.state.user.token)
+        data.id = data._id
+        let blogs = this.state.blogs
+        blogs.push(data)
+        this.setState({ blogs: blogs })
+        this.setState({ newTitle: '' })
+        this.setState({ newAuthor: '' })
+        this.setState({ newUrl: '' })
+      } catch (exception) {
+        this.setState({
+          error: 'Error creating a new blog',
+        })
+        setTimeout(() => {
+          this.setState({ error: null })
+        }, 5000)
+      }
+    }
   }
 
   handleUsernameChange = (event) => {
@@ -99,6 +158,14 @@ class App extends React.Component {
           {this.state.blogs.map(blog =>
             <Blog key={blog.id} blog={blog} />
           )}
+          <h2>Create new</h2>
+          <BlogForm
+            tila={this.state}
+            handleTitleChange={this.handleTitleChange()}
+            handleAuthorChange={this.handleAuthorChange()}
+            handleUrlChange={this.handleUrlChange()}
+            handleCreate={this.handleCreate()}
+          />
         </div>
       );
     }
