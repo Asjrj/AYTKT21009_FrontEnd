@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.info {
+  color: lightgreen;
+  font-size: 16px;
+  border-style: solid;
+  border-color: lightgreen;
+  padding: 10px;
+  margin-bottom: 6px;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
+  border-style: solid;
+  border-color: red;
+  padding: 10px;
+  margin-bottom: 6px;
+}

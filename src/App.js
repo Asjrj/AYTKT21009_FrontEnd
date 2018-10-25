@@ -1,6 +1,7 @@
 import React from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -15,7 +16,8 @@ class App extends React.Component {
       newTitle: '',
       newAuthor: '',
       newUrl: '',
-      error: null
+      info: null,
+      infoType: 'info'
     }
   }
 
@@ -40,9 +42,9 @@ class App extends React.Component {
       this.setState({ username: '', password: '', user })
       window.localStorage.setItem('blogUser', JSON.stringify(user))
     } catch (exception) {
-      this.setState({ error: 'Invalid username or password' })
+      this.setState({ info: 'Invalid username or password', infoType: 'error' })
       setTimeout(() => {
-        this.setState({ error: null })
+        this.setState({ info: null })
       }, 5000)
     }
   }
@@ -78,9 +80,9 @@ class App extends React.Component {
     return async (event) => {
       event.preventDefault()
       if (this.state.newTitle === '' || this.state.newAuthor === '' || this.state.newUrl === '') {
-        this.setState({ error: 'Title, author and url must be given' })
+        this.setState({ info: 'Title, author and url must be given', infoType: 'error' })
         setTimeout(() => {
-          this.setState({ error: null })
+          this.setState({ info: null })
         }, 5000)
         return
       }
@@ -100,12 +102,14 @@ class App extends React.Component {
         this.setState({ newTitle: '' })
         this.setState({ newAuthor: '' })
         this.setState({ newUrl: '' })
-      } catch (exception) {
-        this.setState({
-          error: 'Error creating a new blog',
-        })
+        this.setState({ info: `a new blog ${data.title} by ${data.author} added`, infoType: 'info' })
         setTimeout(() => {
-          this.setState({ error: null })
+          this.setState({ info: null })
+        }, 5000)
+      } catch (exception) {
+        this.setState({ info: 'Error creating a new blog', infoType: 'error' })
+        setTimeout(() => {
+          this.setState({ info: null })
         }, 5000)
       }
     }
@@ -125,6 +129,7 @@ class App extends React.Component {
       return (
         <div>
           <h2>Log in to application</h2>
+          <Notification message={this.state.info} type={this.state.infoType} />
           <form onSubmit={this.login}>
             <div>
               username:
@@ -150,6 +155,7 @@ class App extends React.Component {
       return (
         <div>
           <h2>Blogs</h2>
+          <Notification message={this.state.info} type={this.state.infoType} />
           <form onSubmit={this.logout}>
             <p>{this.state.user.name} logged in&nbsp;
             <button type="submit">logout</button>
