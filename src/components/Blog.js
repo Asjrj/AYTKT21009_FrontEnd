@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Blog = ({ blog, showBlogDetails, setBlogVisibility }) => {
+const Blog = ({ blog, showBlogDetails, setBlogVisibility, likeThisBlog }) => {
   if (showBlogDetails === blog.id) {
     let userName = null
     if (blog.user) {
@@ -11,7 +11,7 @@ const Blog = ({ blog, showBlogDetails, setBlogVisibility }) => {
       <div className='blogDetail'>
         <a onClick={setBlogVisibility}>{blog.title} {blog.author}</a><br />
         <a href={blog.url}>{blog.url}</a><br />
-        <a>{blog.likes} likes <button>like</button></a><br />
+        <a>{blog.likes} likes <button id={blog.id} onClick={likeThisBlog}>like</button></a><br />
         <a style={showUser}>added by {userName}</a>
       </div>
     )

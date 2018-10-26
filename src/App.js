@@ -127,10 +127,26 @@ class App extends React.Component {
   }
 
   setBlogDetailVisibility = (event) => {
-    return (event) => {
-      event.preventDefault()
-      this.setState({ showBlogDetails: event.target.getAttribute("id") })
+    event.preventDefault()
+    this.setState({ showBlogDetails: event.target.getAttribute("id") })
+  }
+
+  likeThisBlog = (event) => {
+    event.preventDefault()
+    let likedBlog = this.state.blogs.find((element) => {
+      return element.id === event.target.getAttribute("id")
+    })
+    const updateBlog = {
+      id: likedBlog.id,
+      title: likedBlog.title,
+      author: likedBlog.author,
+      url: likedBlog.url,
+      likes: likedBlog.likes + 1,
+      user: likedBlog.user ? likedBlog.user._id : null
     }
+    likedBlog.likes = likedBlog.likes + 1
+    this.setState({ blogs: this.state.blogs })
+    blogService.likeBlog(updateBlog, this.state.user.token)
   }
 
 
@@ -172,7 +188,12 @@ class App extends React.Component {
             </p>
           </form>
           {this.state.blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} showBlogDetails={this.state.showBlogDetails} setBlogVisibility={this.setBlogDetailVisibility()} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              showBlogDetails={this.state.showBlogDetails}
+              setBlogVisibility={this.setBlogDetailVisibility}
+              likeThisBlog={this.likeThisBlog} />
           )}
           <h2>Create new</h2>
           <Togglable buttonLabel="new blog" ref={component => this.blogForm = component}>
