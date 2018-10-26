@@ -187,14 +187,16 @@ class App extends React.Component {
             <button type="submit">logout</button>
             </p>
           </form>
-          {this.state.blogs.map(blog =>
-            <Blog
-              key={blog.id}
-              blog={blog}
-              showBlogDetails={this.state.showBlogDetails}
-              setBlogVisibility={this.setBlogDetailVisibility}
-              likeThisBlog={this.likeThisBlog} />
-          )}
+          {this.state.blogs
+            .sort((a, b) => a.likes > b.likes ? -1 : (a.likes < b.likes ? 1 : 0))
+            .map(blog =>
+              <Blog
+                key={blog.id}
+                blog={blog}
+                showBlogDetails={this.state.showBlogDetails}
+                setBlogVisibility={this.setBlogDetailVisibility}
+                likeThisBlog={this.likeThisBlog} />
+            )}
           <h2>Create new</h2>
           <Togglable buttonLabel="new blog" ref={component => this.blogForm = component}>
             <BlogForm
