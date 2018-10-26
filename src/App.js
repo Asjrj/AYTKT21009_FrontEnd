@@ -2,6 +2,7 @@ import React from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -102,6 +103,7 @@ class App extends React.Component {
         this.setState({ newTitle: '' })
         this.setState({ newAuthor: '' })
         this.setState({ newUrl: '' })
+        this.blogForm.toggleVisibility()
         this.setState({ info: `a new blog ${data.title} by ${data.author} added`, infoType: 'info' })
         setTimeout(() => {
           this.setState({ info: null })
@@ -165,13 +167,15 @@ class App extends React.Component {
             <Blog key={blog.id} blog={blog} />
           )}
           <h2>Create new</h2>
-          <BlogForm
-            tila={this.state}
-            handleTitleChange={this.handleTitleChange()}
-            handleAuthorChange={this.handleAuthorChange()}
-            handleUrlChange={this.handleUrlChange()}
-            handleCreate={this.handleCreate()}
-          />
+          <Togglable buttonLabel="new blog" ref={component => this.blogForm = component}>
+            <BlogForm
+              tila={this.state}
+              handleTitleChange={this.handleTitleChange()}
+              handleAuthorChange={this.handleAuthorChange()}
+              handleUrlChange={this.handleUrlChange()}
+              handleCreate={this.handleCreate()}
+            ></BlogForm>
+          </Togglable>
         </div>
       );
     }
