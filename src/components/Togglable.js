@@ -1,4 +1,5 @@
 import React from 'react'
+
 class Togglable extends React.Component {
   constructor(props) {
     super(props)
@@ -8,7 +9,7 @@ class Togglable extends React.Component {
   }
 
   toggleVisibility = () => {
-    this.setState({visible: !this.state.visible})
+    this.setState({ visible: !this.state.visible })
   }
 
   render() {

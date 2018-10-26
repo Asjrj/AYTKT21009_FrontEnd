@@ -18,7 +18,8 @@ class App extends React.Component {
       newAuthor: '',
       newUrl: '',
       info: null,
-      infoType: 'info'
+      infoType: 'info',
+      showBlogDetails: ''
     }
   }
 
@@ -125,6 +126,13 @@ class App extends React.Component {
     this.setState({ password: event.target.value })
   }
 
+  setBlogDetailVisibility = (event) => {
+    return (event) => {
+      event.preventDefault()
+      this.setState({ showBlogDetails: event.target.getAttribute("id") })
+    }
+  }
+
 
   render() {
     if (this.state.user === null) {
@@ -164,7 +172,7 @@ class App extends React.Component {
             </p>
           </form>
           {this.state.blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} showBlogDetails={this.state.showBlogDetails} setBlogVisibility={this.setBlogDetailVisibility()} />
           )}
           <h2>Create new</h2>
           <Togglable buttonLabel="new blog" ref={component => this.blogForm = component}>
