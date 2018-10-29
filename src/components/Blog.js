@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, showBlogDetails, setBlogVisibility, likeThisBlog, deleteThisBlog, currentUser }) => {
   if (showBlogDetails === blog.id) {
@@ -28,6 +29,15 @@ const Blog = ({ blog, showBlogDetails, setBlogVisibility, likeThisBlog, deleteTh
       </div>
     )
   }
+}
+
+Blog.propTypes = {  
+  blog: PropTypes.object.isRequired,
+  showBlogDetails: PropTypes.string.isRequired,
+  setBlogVisibility: PropTypes.func.isRequired,
+  likeThisBlog: PropTypes.func.isRequired,
+  deleteThisBlog: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired
 }
 
 export default Blog
