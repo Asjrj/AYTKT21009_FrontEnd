@@ -12,9 +12,15 @@ const addBlog = async (newBlog, token) => {
 }
 
 const likeBlog = async (newBlog, token) => {
-  const postUrl = baseUrl + '/' + newBlog.id
-  const response = await axios.put(postUrl, newBlog, { headers: { Authorization: "Bearer " + token } })
+  const putUrl = baseUrl + '/' + newBlog.id
+  const response = await axios.put(putUrl, newBlog, { headers: { Authorization: "Bearer " + token } })
   return response.data
 }
 
-export default { getAll, addBlog, likeBlog }
+const deleteBlog = async (blogId, token) => {
+  const delUrl = baseUrl + '/' + blogId
+  const response = await axios.delete(delUrl, { headers: { Authorization: "Bearer " + token } })
+  return response.data
+}
+
+export default { getAll, addBlog, likeBlog, deleteBlog }

@@ -149,6 +149,18 @@ class App extends React.Component {
     blogService.likeBlog(updateBlog, this.state.user.token)
   }
 
+  deleteThisBlog = (event) => {
+    event.preventDefault()
+    let delId = event.target.getAttribute("id")
+    let deleteBlog = this.state.blogs.find((element) => {
+      return element.id === delId
+    })
+    if (window.confirm(`delete ${deleteBlog.title} by ${deleteBlog.author}`)) {
+      blogService.deleteBlog(delId, this.state.user.token)
+      this.setState({ blogs: this.state.blogs.filter(element => element.id !== delId) })
+    }
+  }
+
 
   render() {
     if (this.state.user === null) {
@@ -195,7 +207,8 @@ class App extends React.Component {
                 blog={blog}
                 showBlogDetails={this.state.showBlogDetails}
                 setBlogVisibility={this.setBlogDetailVisibility}
-                likeThisBlog={this.likeThisBlog} />
+                likeThisBlog={this.likeThisBlog}
+                deleteThisBlog={this.deleteThisBlog} />
             )}
           <h2>Create new</h2>
           <Togglable buttonLabel="new blog" ref={component => this.blogForm = component}>
