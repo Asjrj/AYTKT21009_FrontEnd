@@ -1,10 +1,14 @@
 import React from 'react'
 
-const Blog = ({ blog, showBlogDetails, setBlogVisibility, likeThisBlog, deleteThisBlog }) => {
+const Blog = ({ blog, showBlogDetails, setBlogVisibility, likeThisBlog, deleteThisBlog, currentUser }) => {
   if (showBlogDetails === blog.id) {
+    let showDeleteButton = { display: '' }
     let userName = null
     if (blog.user) {
       userName = blog.user.name
+      if (currentUser.name !== blog.user.name) {
+        showDeleteButton = { display: 'none' }
+      }
     }
     let showUser = { display: userName ? '' : 'none' }
     return (
@@ -13,7 +17,7 @@ const Blog = ({ blog, showBlogDetails, setBlogVisibility, likeThisBlog, deleteTh
         <a href={blog.url}>{blog.url}</a><br />
         <a>{blog.likes} likes <button id={blog.id} onClick={likeThisBlog}>like</button></a><br />
         <a style={showUser}>added by {userName}</a><br />
-        <button id={blog.id} onClick={deleteThisBlog}>delete</button>
+        <button style={showDeleteButton} id={blog.id} onClick={deleteThisBlog}>delete</button>
       </div>
     )
   }

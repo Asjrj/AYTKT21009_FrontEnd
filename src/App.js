@@ -208,7 +208,8 @@ class App extends React.Component {
                 showBlogDetails={this.state.showBlogDetails}
                 setBlogVisibility={this.setBlogDetailVisibility}
                 likeThisBlog={this.likeThisBlog}
-                deleteThisBlog={this.deleteThisBlog} />
+                deleteThisBlog={this.deleteThisBlog} 
+                currentUser={this.state.user} />
             )}
           <h2>Create new</h2>
           <Togglable buttonLabel="new blog" ref={component => this.blogForm = component}>
