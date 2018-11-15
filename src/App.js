@@ -1,7 +1,10 @@
 import React from 'react'
 import Login from './containers/Login'
 import Blogs from './containers/Blogs'
+import Users from './containers/Users'
 import blogService from './services/blogs'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
 
 class App extends React.Component {
   constructor(props) {
@@ -55,13 +58,22 @@ class App extends React.Component {
       )
     } else {
       return (
-        <Blogs
-          user={this.state.user}
-          blogs={this.state.blogs}
-          addBlog={this.addBlog}
-          likeThisBlog={this.likeThisBlog}
-          deleteThisBlog={this.deleteThisBlog}
-        ></Blogs>
+        <Router>
+          <div>
+            <Route exact path="/" render={() =>
+              <Blogs
+                user={this.state.user}
+                blogs={this.state.blogs}
+                addBlog={this.addBlog}
+                likeThisBlog={this.likeThisBlog}
+                deleteThisBlog={this.deleteThisBlog}
+              ></Blogs>} />
+            <Route exact path="/users" render={() =>
+              <Users
+                user={this.state.user}
+              ></Users>} />
+          </div>
+        </Router>
       )
     }
   }
