@@ -14,7 +14,7 @@ const Blog = ({ blog, showBlogDetails, setBlogVisibility, likeThisBlog, deleteTh
     let showUser = { display: userName ? '' : 'none' }
     return (
       <div className='blogDetail'>
-        <a onClick={setBlogVisibility}>{blog.title} {blog.author}</a><br />
+        <a id={blog.id} onClick={setBlogVisibility}>{blog.title} {blog.author}</a><br />
         <a href={blog.url}>{blog.url}</a><br />
         <a>{blog.likes} likes <button id={blog.id} onClick={likeThisBlog}>like</button></a><br />
         <a style={showUser}>added by {userName}</a><br />
