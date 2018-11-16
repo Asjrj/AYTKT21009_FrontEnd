@@ -1,19 +1,7 @@
 import React from 'react'
-import userService from '../services/users'
+import { Link } from 'react-router-dom'
 
 class Users extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      users: []
-    }
-  }
-
-  componentDidMount() {
-    userService.getAll().then(users =>
-      this.setState({ users })
-    )
-  }
 
   logout = (event) => {
     event.preventDefault()
@@ -29,13 +17,14 @@ class Users extends React.Component {
           <p>{this.props.user.name} logged in&nbsp; <button type="submit">logout</button>
           </p>
         </form>
+        <h3>Users</h3>
         <table>
           <tbody>
             <tr><td></td><td>blogs added</td></tr>
-            {this.state.users
+            {this.props.users
               .map(user =>
                 <tr key={user.id}>
-                  <td>{user.name}</td><td>{user.blogs.length}</td>
+                  <td><Link to={`/users/${user.id}`}>{user.name}</Link></td><td>{user.blogs.length}</td>
                 </tr>
               )}
           </tbody>
