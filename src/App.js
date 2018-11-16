@@ -1,6 +1,7 @@
 import React from 'react'
 import Login from './containers/Login'
 import Blogs from './containers/Blogs'
+import Blog from './containers/Blog'
 import Users from './containers/Users'
 import User from './containers/User'
 import blogService from './services/blogs'
@@ -56,6 +57,10 @@ class App extends React.Component {
     return this.state.users.find(a => a.id === id)
   }
 
+  blogById = (id) => {
+    return this.state.blogs.find(a => a.id === id)
+  }
+
   render() {
     if (this.state.user === null) {
       return (
@@ -73,9 +78,15 @@ class App extends React.Component {
                 user={this.state.user}
                 blogs={this.state.blogs}
                 addBlog={this.addBlog}
+              ></Blogs>} />
+            <Route exact path="/blogs/:id" render={({ match }) =>
+              <Blog
+                user={this.state.user}
+                blog={this.blogById(match.params.id)}
+                blogs={this.state.blogs}
                 likeThisBlog={this.likeThisBlog}
                 deleteThisBlog={this.deleteThisBlog}
-              ></Blogs>} />
+              ></Blog>} />
             <Route exact path="/users" render={() =>
               <Users
                 user={this.state.user}

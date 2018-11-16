@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class User extends React.Component {
 
@@ -34,6 +35,12 @@ class User extends React.Component {
       </div>
     )
   }
+}
+
+User.propTypes = {
+  user: PropTypes.object.isRequired,
+  theUser: PropTypes.object.isRequired,
+  blogs: PropTypes.array.isRequired
 }
 
 export default User

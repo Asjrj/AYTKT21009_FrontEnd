@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 class Users extends React.Component {
 
@@ -32,6 +33,11 @@ class Users extends React.Component {
       </div>
     )
   }
+}
+
+Users.propTypes = {
+  user: PropTypes.object.isRequired,
+  users: PropTypes.array.isRequired
 }
 
 export default Users
