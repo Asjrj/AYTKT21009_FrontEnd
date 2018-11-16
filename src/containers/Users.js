@@ -3,21 +3,9 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 class Users extends React.Component {
-
-  logout = (event) => {
-    event.preventDefault()
-    window.localStorage.removeItem('blogUser')
-    window.location.reload()
-  }
-
   render() {
     return (
       <div>
-        <h2>Blogs</h2>
-        <form onSubmit={this.logout}>
-          <p>{this.props.user.name} logged in&nbsp; <button type="submit">logout</button>
-          </p>
-        </form>
         <h3>Users</h3>
         <table>
           <tbody>
@@ -36,7 +24,6 @@ class Users extends React.Component {
 }
 
 Users.propTypes = {
-  user: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired
 }
 

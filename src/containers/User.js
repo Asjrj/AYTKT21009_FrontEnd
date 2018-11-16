@@ -22,11 +22,6 @@ class User extends React.Component {
   render() {
     return (
       <div>
-        <h2>Blogs</h2>
-        <form onSubmit={this.logout}>
-          <p>{this.props.user.name} logged in&nbsp; <button type="submit">logout</button>
-          </p>
-        </form>
         <h2>{this.props.theUser.name}</h2>
         <h3>Added blogs</h3>
         <ul>
@@ -38,7 +33,6 @@ class User extends React.Component {
 }
 
 User.propTypes = {
-  user: PropTypes.object.isRequired,
   theUser: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired
 }

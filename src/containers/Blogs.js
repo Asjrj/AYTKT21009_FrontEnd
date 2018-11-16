@@ -40,12 +40,6 @@ class Blogs extends React.Component {
     }
   }
 
-  logout = (event) => {
-    event.preventDefault()
-    window.localStorage.removeItem('blogUser')
-    window.location.reload()
-  }
-
   handleCreate = () => {
     return async (event) => {
       event.preventDefault()
@@ -87,13 +81,7 @@ class Blogs extends React.Component {
   render() {
     return (
       <div>
-        <h2>Blogs</h2>
         <Notification message={this.state.info} type={this.state.infoType} />
-        <form onSubmit={this.logout}>
-          <p>{this.props.user.name} logged in&nbsp;
-        <button type="submit">logout</button>
-          </p>
-        </form>
         {this.props.blogs
           .sort((a, b) => a.likes > b.likes ? -1 : (a.likes < b.likes ? 1 : 0))
           .map(blog =>

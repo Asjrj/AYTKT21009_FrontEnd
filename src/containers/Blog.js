@@ -12,12 +12,6 @@ class Blog extends React.Component {
     }
   }
 
-  logout = (event) => {
-    event.preventDefault()
-    window.localStorage.removeItem('blogUser')
-    window.location.reload()
-  }
-
   likeThisBlog = async (event) => {
     event.preventDefault()
     let likedBlog = this.props.blogs.find((element) => {
@@ -78,12 +72,7 @@ class Blog extends React.Component {
     if (this.props.blog) {
       return (
         <div>
-          <h2>Blogs</h2>
           <Notification message={this.state.info} type={this.state.infoType} />
-          <form onSubmit={this.logout}>
-            <p>{this.props.user.name} logged in&nbsp; <button type="submit">logout</button>
-            </p>
-          </form>
           <h2>{this.props.blog.title}</h2>
           <div className='blogDetail'>
             <a href={this.props.blog.url}>{this.props.blog.url}</a><br />

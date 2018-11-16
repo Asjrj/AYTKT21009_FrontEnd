@@ -1,5 +1,6 @@
 import React from 'react'
 import Login from './containers/Login'
+import Logout from './containers/Logout'
 import Blogs from './containers/Blogs'
 import Blog from './containers/Blog'
 import Users from './containers/Users'
@@ -73,6 +74,7 @@ class App extends React.Component {
       return (
         <Router>
           <div>
+            <Logout user={this.state.user} />
             <Route exact path="/" render={() =>
               <Blogs
                 user={this.state.user}
@@ -89,11 +91,10 @@ class App extends React.Component {
               ></Blog>} />
             <Route exact path="/users" render={() =>
               <Users
-                user={this.state.user}
                 users={this.state.users}
               ></Users>} />
             <Route exact path="/users/:id" render={({ match }) =>
-              <User user={this.state.user} theUser={this.userById(match.params.id)} blogs={this.state.blogs} />}
+              <User theUser={this.userById(match.params.id)} blogs={this.state.blogs} />}
             />
           </div>
         </Router>
