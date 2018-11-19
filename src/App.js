@@ -49,6 +49,12 @@ class App extends React.Component {
     this.setState({ blogs: newBlogs })
   }
 
+  commentThisBlog = (blog) => {
+    let newBlogs = this.state.blogs.filter((element) => element.id !== blog.id)
+    newBlogs.push(blog)
+    this.setState({ blogs: newBlogs })
+  }
+
   deleteThisBlog = (deleteBlog) => {
     let newBlogs = this.state.blogs.slice(0)
     this.setState({ blogs: newBlogs.filter(element => element.id !== deleteBlog.id) })
@@ -88,6 +94,7 @@ class App extends React.Component {
                 blogs={this.state.blogs}
                 likeThisBlog={this.likeThisBlog}
                 deleteThisBlog={this.deleteThisBlog}
+                commentThisBlog={this.commentThisBlog}
               ></Blog>} />
             <Route exact path="/users" render={() =>
               <Users

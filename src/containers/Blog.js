@@ -8,8 +8,14 @@ class Blog extends React.Component {
     super(props)
     this.state = {
       info: null,
-      infoType: 'info'
+      infoType: 'info',
+      newComment: ''
     }
+  }
+
+  handleCommentChange = (event) => {
+    event.preventDefault()
+    this.setState({ newComment: event.target.value })
   }
 
   likeThisBlog = async (event) => {
@@ -59,6 +65,32 @@ class Blog extends React.Component {
     }
   }
 
+  commentThisBlog = async (event) => {
+    event.preventDefault()
+    let blogId = event.target.getAttribute("id")
+    let blog = this.props.blogs.find((element) => {
+      return element.id === blogId
+    })
+    try {
+      if (this.state.newComment !== undefined && this.state.newComment !== '') {
+        let comment = this.state.newComment
+        await blogService.commentBlog(blogId, comment)       
+        this.setState({ newComment: '' })
+        this.setState({ info: `comment: "${comment}" added`, infoType: 'info' })
+        setTimeout(() => { this.setState({ info: null }) }, 5000)
+        if (blog.comments === undefined) { blog.comments = [] }
+        blog.comments = blog.comments.concat(comment)
+        this.props.commentThisBlog(blog)
+      }
+    }
+    catch (exception) {
+      this.setState({ info: 'Error commenting blog', infoType: 'error' })
+      setTimeout(() => {
+        this.setState({ info: null })
+      }, 5000)
+    }
+  }
+
   render() {
     let showDeleteButton = { display: '' }
     let userName = null
@@ -82,14 +114,14 @@ class Blog extends React.Component {
           </div>
           <div>
             <h3>Comments</h3>
-            <lu>
-              {this.props.blog.comments.map(comment => <li>{comment}</li>)}
-            </lu>
+            <ul>
+              {this.props.blog.comments.map(comment => <li key={comment}>{comment}</li>)}
+            </ul>
           </div>
           <form >
             <div>
-              <input type="text" />
-              <button type="submit">add comment</button>
+              <input type="text" value={this.state.newComment} onChange={this.handleCommentChange} />
+              <button id={this.props.blog.id} onClick={this.commentThisBlog}>add comment</button>
             </div>
           </form>
         </div>
@@ -113,7 +145,8 @@ Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired,
   likeThisBlog: PropTypes.func,
-  deleteThisBlog: PropTypes.func
+  deleteThisBlog: PropTypes.func,
+  commentThisBlog: PropTypes.func
 }
 
 export default Blog
