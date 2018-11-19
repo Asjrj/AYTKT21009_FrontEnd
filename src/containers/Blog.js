@@ -80,6 +80,18 @@ class Blog extends React.Component {
             <a style={showUser}>added by {userName}</a><br />
             <button style={showDeleteButton} id={this.props.blog.id} onClick={this.deleteThisBlog}>delete</button>
           </div>
+          <div>
+            <h3>Comments</h3>
+            <lu>
+              {this.props.blog.comments.map(comment => <li>{comment}</li>)}
+            </lu>
+          </div>
+          <form >
+            <div>
+              <input type="text" />
+              <button type="submit">add comment</button>
+            </div>
+          </form>
         </div>
       )
     }
@@ -100,7 +112,7 @@ Blog.propTypes = {
   user: PropTypes.object.isRequired,
   blog: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired,
-  likeThisBlog: PropTypes.func, 
+  likeThisBlog: PropTypes.func,
   deleteThisBlog: PropTypes.func
 }
 
