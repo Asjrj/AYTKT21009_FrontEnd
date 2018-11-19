@@ -5,6 +5,8 @@ import BlogForm from '../components/BlogForm'
 import Notification from '../components/Notification'
 import Togglable from '../components/Togglable'
 import PropTypes from 'prop-types'
+import { notify } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 
 
 class Blogs extends React.Component {
@@ -13,9 +15,7 @@ class Blogs extends React.Component {
     this.state = {
       newTitle: '',
       newAuthor: '',
-      newUrl: '',
-      info: null,
-      infoType: 'info'
+      newUrl: ''
     }
   }
 
@@ -43,11 +43,8 @@ class Blogs extends React.Component {
   handleCreate = () => {
     return async (event) => {
       event.preventDefault()
-      if (this.state.newTitle === '' || this.state.newAuthor === '' || this.state.newUrl === '') {
-        this.setState({ info: 'Title, author and url must be given', infoType: 'error' })
-        setTimeout(() => {
-          this.setState({ info: null })
-        }, 5000)
+      if (this.state.newTitle === '' || this.state.newAuthor === '' || this.state.newUrl === '') {        
+        this.props.notify('Title, author and url must be given', 'error', 5)
         return
       }
       const newBlog = {
@@ -64,16 +61,10 @@ class Blogs extends React.Component {
         this.setState({ newAuthor: '' })
         this.setState({ newUrl: '' })
         this.blogForm.toggleVisibility()
-        this.setState({ info: `a new blog ${newBlog.title} by ${newBlog.author} added`, infoType: 'info' })
-        setTimeout(() => {
-          this.setState({ info: null })
-        }, 5000)
+        this.props.notify(`a new blog ${newBlog.title} by ${newBlog.author} added`, 'info', 5)
       }
       catch (exception) {
-        this.setState({ info: 'Error creating a new blog', infoType: 'error' })
-        setTimeout(() => {
-          this.setState({ info: null })
-        }, 5000)
+        this.props.notify('Error creating a new blog', 'error', 5)
       }
     }
   }
@@ -81,7 +72,7 @@ class Blogs extends React.Component {
   render() {
     return (
       <div>
-        <Notification message={this.state.info} type={this.state.infoType} />
+        <Notification message='' type='info' />
         {this.props.blogs
           .sort((a, b) => a.likes > b.likes ? -1 : (a.likes < b.likes ? 1 : 0))
           .map(blog =>
@@ -110,4 +101,4 @@ Blogs.propTypes = {
   blogs: PropTypes.array.isRequired
 }
 
-export default Blogs
+export default connect(null, { notify })(Blogs)

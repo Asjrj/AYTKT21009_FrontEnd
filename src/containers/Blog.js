@@ -1,14 +1,14 @@
 import React from 'react'
 import blogService from '../services/blogs'
 import Notification from '../components/Notification'
+import { notify } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 class Blog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      info: null,
-      infoType: 'info',
       newComment: ''
     }
   }
@@ -37,10 +37,7 @@ class Blog extends React.Component {
       this.props.likeThisBlog(likedBlog)
     }
     catch (exception) {
-      this.setState({ info: 'Error performing like functionality', infoType: 'error' })
-      setTimeout(() => {
-        this.setState({ info: null })
-      }, 5000)
+      this.props.notify('Error performing like functionality', 'error', 5)
     }
   }
 
@@ -58,10 +55,7 @@ class Blog extends React.Component {
       }
     }
     catch (exception) {
-      this.setState({ info: 'Error deleting blog', infoType: 'error' })
-      setTimeout(() => {
-        this.setState({ info: null })
-      }, 5000)
+      this.props.notify('Error deleting blog', 'error', 5)
     }
   }
 
@@ -74,20 +68,16 @@ class Blog extends React.Component {
     try {
       if (this.state.newComment !== undefined && this.state.newComment !== '') {
         let comment = this.state.newComment
-        await blogService.commentBlog(blogId, comment)       
+        await blogService.commentBlog(blogId, comment)
         this.setState({ newComment: '' })
-        this.setState({ info: `comment: "${comment}" added`, infoType: 'info' })
-        setTimeout(() => { this.setState({ info: null }) }, 5000)
+        this.props.notify(`comment: "${comment}" added`, 'info', 5)
         if (blog.comments === undefined) { blog.comments = [] }
         blog.comments = blog.comments.concat(comment)
         this.props.commentThisBlog(blog)
       }
     }
     catch (exception) {
-      this.setState({ info: 'Error commenting blog', infoType: 'error' })
-      setTimeout(() => {
-        this.setState({ info: null })
-      }, 5000)
+      this.props.notify('Error commenting blog', 'error', 5)
     }
   }
 
@@ -101,10 +91,11 @@ class Blog extends React.Component {
       }
     }
     let showUser = { display: userName ? '' : 'none' }
+    
     if (this.props.blog) {
       return (
         <div>
-          <Notification message={this.state.info} type={this.state.infoType} />
+          <Notification message='' type='info' />
           <h2>{this.props.blog.title}</h2>
           <div className='blogDetail'>
             <a href={this.props.blog.url}>{this.props.blog.url}</a><br />
@@ -120,7 +111,7 @@ class Blog extends React.Component {
           </div>
           <form >
             <div>
-              <input type="text" value={this.state.newComment} onChange={this.handleCommentChange} />
+            <input type="text" value={this.state.newComment} onChange={this.handleCommentChange} />
               <button id={this.props.blog.id} onClick={this.commentThisBlog}>add comment</button>
             </div>
           </form>
@@ -149,4 +140,4 @@ Blog.propTypes = {
   commentThisBlog: PropTypes.func
 }
 
-export default Blog
+export default connect(null, { notify })(Blog)

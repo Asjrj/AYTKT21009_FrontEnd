@@ -2,13 +2,13 @@ import React from 'react'
 import loginService from '../services/login'
 import LoginForm from '../components/LoginForm'
 import Notification from '../components/Notification'
+import { notify } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 
 class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      info: null,
-      infoType: 'info',
       username: '',
       password: ''
     }
@@ -32,10 +32,7 @@ class Login extends React.Component {
       this.props.login(user)
     }
     catch (exception) {
-      this.setState({ info: 'Invalid username or password', infoType: 'error' })
-      setTimeout(() => {
-        this.setState({ info: null })
-      }, 5000)
+      this.props.notify('Invalid username or password', 'error', 5)
     }
   }
 
@@ -43,7 +40,7 @@ class Login extends React.Component {
     return (
       <div>
         <h2>Log in to application</h2>
-        <Notification message={this.state.info} type={this.state.infoType} />
+        <Notification message='' type='info' />
         <LoginForm
           username={this.state.username}
           password={this.state.password}
@@ -56,4 +53,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login
+export default connect(null, { notify })(Login)
