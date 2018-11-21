@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 class User extends React.Component {
@@ -9,23 +10,24 @@ class User extends React.Component {
     window.location.reload()
   }
 
-  getTheBlogs = () => {
+  getTheBlogs = (userId) => {
     let theBlogs = []
     this.props.blogs.forEach(element => {
-      if(element.user && element.user._id === this.props.theUser.id){
+      if (element.user && element.user._id === userId) {
         theBlogs.push(element)
       }
     });
-    return(theBlogs)
+    return (theBlogs)
   }
 
   render() {
+    let theUser = this.props.users.find(a => a.id === this.props.userId)
     return (
       <div>
-        <h2>{this.props.theUser.name}</h2>
+        <h2>{theUser.name}</h2>
         <h3>Added blogs</h3>
         <ul>
-        {this.getTheBlogs().map(blog => <li key={blog.id}>{blog.title} by {blog.author}</li>)}
+          {this.getTheBlogs(this.props.userId).map(blog => <li key={blog.id}>{blog.title} by {blog.author}</li>)}
         </ul>
       </div>
     )
@@ -33,8 +35,12 @@ class User extends React.Component {
 }
 
 User.propTypes = {
-  theUser: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired
 }
-
-export default User
+const mapStateToProps = (state, ownProps) => {
+  return {
+    users: state.users.users,
+    userId: ownProps.theUserId
+  }
+}
+export default connect(mapStateToProps)(User)

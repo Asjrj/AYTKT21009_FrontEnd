@@ -40,7 +40,7 @@ class Login extends React.Component {
     return (
       <div>
         <h2>Log in to application</h2>
-        <Notification message='' type='info' />
+        <Notification />
         <LoginForm
           username={this.state.username}
           password={this.state.password}

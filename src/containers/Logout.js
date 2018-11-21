@@ -1,6 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+
 
 class Logout extends React.Component {
 
@@ -39,8 +40,9 @@ class Logout extends React.Component {
   }
 }
 
-Logout.propTypes = {
-  user: PropTypes.object.isRequired
+const mapStateToProps = (state) => {
+  return {
+    theUser: state.users.user
+  }
 }
-
-export default Logout
+export default connect(mapStateToProps)(Logout)

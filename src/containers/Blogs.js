@@ -43,7 +43,7 @@ class Blogs extends React.Component {
   handleCreate = () => {
     return async (event) => {
       event.preventDefault()
-      if (this.state.newTitle === '' || this.state.newAuthor === '' || this.state.newUrl === '') {        
+      if (this.state.newTitle === '' || this.state.newAuthor === '' || this.state.newUrl === '') {
         this.props.notify('Title, author and url must be given', 'error', 5)
         return
       }
@@ -72,7 +72,7 @@ class Blogs extends React.Component {
   render() {
     return (
       <div>
-        <Notification message='' type='info' />
+        <Notification />
         {this.props.blogs
           .sort((a, b) => a.likes > b.likes ? -1 : (a.likes < b.likes ? 1 : 0))
           .map(blog =>
@@ -100,5 +100,4 @@ Blogs.propTypes = {
   user: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired
 }
-
 export default connect(null, { notify })(Blogs)

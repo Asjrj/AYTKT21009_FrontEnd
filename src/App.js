@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Login from './containers/Login'
 import Logout from './containers/Logout'
 import Blogs from './containers/Blogs'
@@ -6,7 +7,7 @@ import Blog from './containers/Blog'
 import Users from './containers/Users'
 import User from './containers/User'
 import blogService from './services/blogs'
-import userService from './services/users'
+import { initializeUsers } from './reducers/userReducer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 
@@ -15,7 +16,6 @@ class App extends React.Component {
     super(props)
     this.state = {
       blogs: [],
-      users: [],
       user: null
     }
   }
@@ -23,8 +23,7 @@ class App extends React.Component {
   async componentDidMount() {
     const blogs = await blogService.getAll()
     this.setState({ blogs })
-    const users = await userService.getAll()
-    this.setState({ users })
+    await this.props.initializeUsers()
     const loggedUserJSON = window.localStorage.getItem('blogUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
@@ -60,10 +59,6 @@ class App extends React.Component {
     this.setState({ blogs: newBlogs.filter(element => element.id !== deleteBlog.id) })
   }
 
-  userById = (id) => {
-    return this.state.users.find(a => a.id === id)
-  }
-
   blogById = (id) => {
     return this.state.blogs.find(a => a.id === id)
   }
@@ -96,12 +91,9 @@ class App extends React.Component {
                 deleteThisBlog={this.deleteThisBlog}
                 commentThisBlog={this.commentThisBlog}
               ></Blog>} />
-            <Route exact path="/users" render={() =>
-              <Users
-                users={this.state.users}
-              ></Users>} />
+            <Route exact path="/users" render={() => <Users />} />
             <Route exact path="/users/:id" render={({ match }) =>
-              <User theUser={this.userById(match.params.id)} blogs={this.state.blogs} />}
+              <User theUserId={match.params.id} blogs={this.state.blogs} />}
             />
           </div>
         </Router>
@@ -110,4 +102,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(null, { initializeUsers })(App)

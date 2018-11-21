@@ -2,14 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 class Notification extends React.Component {
-  render() {
-    const message = this.props.notification
-    if (message === null || message === '') {
+  render() {    
+    if (this.props.notification === null || this.props.notification === '') {
       return <div></div>
     }
     return (
       <div className={this.props.notificationType}>
-        {message}
+        {this.props.notification}
       </div>
     )
   }
@@ -17,8 +16,8 @@ class Notification extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    notification: state.notification,
-    notificationType: state.notificationType
+    notification: state.notification.message,
+    notificationType: state.notification.type
   }
 }
 

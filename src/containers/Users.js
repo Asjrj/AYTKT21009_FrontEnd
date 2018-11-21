@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 class Users extends React.Component {
   render() {
@@ -23,8 +23,10 @@ class Users extends React.Component {
   }
 }
 
-Users.propTypes = {
-  users: PropTypes.array.isRequired
+const mapStateToProps = (state) => {
+  return {
+    users: state.users.users
+  }
 }
 
-export default Users
+export default connect(mapStateToProps)(Users)

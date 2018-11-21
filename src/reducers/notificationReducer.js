@@ -1,19 +1,19 @@
 const initialState = {
-  notification: '',
-  notificationType: 'info'
+  message: '',
+  type: 'info'
 }
 
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'NOTIFY':
       return {
-        notification: action.data.notification,
-        notificationType: action.data.notificationType
+        message: action.data.message,
+        type: action.data.type
       }
     case 'CLEAR':
       return {
-        notification: '',
-        notificationType: 'info'
+        message: '',
+        type: 'info'
       }
     default:
       return state
@@ -25,16 +25,16 @@ export const notify = (message, messageType, sec) => {
     dispatch({
       type: 'NOTIFY',
       data: {
-        notification: message,
-        notificationType: messageType
+        message: message,
+        type: messageType
       }
     })
     await setTimeout(() => {
       dispatch({
         type: 'CLEAR',
         data: {
-          notification: '',
-          notificationType: 'info'
+          message: '',
+          type: 'info'
         }
       })
     }, sec * 1000)

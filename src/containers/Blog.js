@@ -86,16 +86,16 @@ class Blog extends React.Component {
     let userName = null
     if (this.props.blog && this.props.blog.user) {
       userName = this.props.blog.user.name
-      if (this.props.user.name !== this.props.blog.user.name) {
+      if (this.props.user && this.props.user.name !== this.props.blog.user.name) {
         showDeleteButton = { display: 'none' }
       }
     }
     let showUser = { display: userName ? '' : 'none' }
-    
+
     if (this.props.blog) {
       return (
         <div>
-          <Notification message='' type='info' />
+          <Notification />
           <h2>{this.props.blog.title}</h2>
           <div className='blogDetail'>
             <a href={this.props.blog.url}>{this.props.blog.url}</a><br />
@@ -111,7 +111,7 @@ class Blog extends React.Component {
           </div>
           <form >
             <div>
-            <input type="text" value={this.state.newComment} onChange={this.handleCommentChange} />
+              <input type="text" value={this.state.newComment} onChange={this.handleCommentChange} />
               <button id={this.props.blog.id} onClick={this.commentThisBlog}>add comment</button>
             </div>
           </form>
@@ -119,14 +119,7 @@ class Blog extends React.Component {
       )
     }
     else {
-      return (
-        <div>
-          <h2>Blogs</h2>
-          <form onSubmit={this.logout}>
-            <p>{this.props.user.name} logged in&nbsp; <button type="submit">logout</button>
-            </p>
-          </form>
-        </div>)
+      return (<div></div>)
     }
   }
 }
