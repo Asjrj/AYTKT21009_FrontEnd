@@ -39,6 +39,7 @@ User.propTypes = {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
+    blogs: state.blogs.blogs,
     users: state.users.users,
     userId: ownProps.theUserId
   }

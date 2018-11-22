@@ -6,7 +6,7 @@ import Blogs from './containers/Blogs'
 import Blog from './containers/Blog'
 import Users from './containers/Users'
 import User from './containers/User'
-import blogService from './services/blogs'
+import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
@@ -15,14 +15,12 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      blogs: [],
       user: null
     }
   }
 
   async componentDidMount() {
-    const blogs = await blogService.getAll()
-    this.setState({ blogs })
+    await this.props.initializeBlogs()
     await this.props.initializeUsers()
     const loggedUserJSON = window.localStorage.getItem('blogUser')
     if (loggedUserJSON) {
@@ -36,40 +34,10 @@ class App extends React.Component {
     window.localStorage.setItem('blogUser', JSON.stringify(user))
   }
 
-  addBlog = (newBlog) => {
-    let newBlogs = this.state.blogs.slice(0)
-    newBlogs.push(newBlog)
-    this.setState({ blogs: newBlogs })
-  }
-
-  likeThisBlog = (likedBlog) => {
-    let newBlogs = this.state.blogs.filter((element) => element.id !== likedBlog.id)
-    newBlogs.push(likedBlog)
-    this.setState({ blogs: newBlogs })
-  }
-
-  commentThisBlog = (blog) => {
-    let newBlogs = this.state.blogs.filter((element) => element.id !== blog.id)
-    newBlogs.push(blog)
-    this.setState({ blogs: newBlogs })
-  }
-
-  deleteThisBlog = (deleteBlog) => {
-    let newBlogs = this.state.blogs.slice(0)
-    this.setState({ blogs: newBlogs.filter(element => element.id !== deleteBlog.id) })
-  }
-
-  blogById = (id) => {
-    return this.state.blogs.find(a => a.id === id)
-  }
-
   render() {
     if (this.state.user === null) {
       return (
-        <Login
-          state={this.state}
-          login={this.login}
-        ></Login>
+        <Login state={this.state} login={this.login} />
       )
     } else {
       return (
@@ -77,20 +45,11 @@ class App extends React.Component {
           <div>
             <Logout user={this.state.user} />
             <Route exact path="/" render={() =>
-              <Blogs
-                user={this.state.user}
-                blogs={this.state.blogs}
-                addBlog={this.addBlog}
-              ></Blogs>} />
+              <Blogs user={this.state.user} />}
+            />
             <Route exact path="/blogs/:id" render={({ match }) =>
-              <Blog
-                user={this.state.user}
-                blog={this.blogById(match.params.id)}
-                blogs={this.state.blogs}
-                likeThisBlog={this.likeThisBlog}
-                deleteThisBlog={this.deleteThisBlog}
-                commentThisBlog={this.commentThisBlog}
-              ></Blog>} />
+              <Blog blogId={match.params.id} user={this.state.user} ></Blog>}
+            />
             <Route exact path="/users" render={() => <Users />} />
             <Route exact path="/users/:id" render={({ match }) =>
               <User theUserId={match.params.id} blogs={this.state.blogs} />}
@@ -102,4 +61,8 @@ class App extends React.Component {
   }
 }
 
-export default connect(null, { initializeUsers })(App)
+const mapDispatchToProps = {
+  initializeBlogs,
+  initializeUsers
+}
+export default connect(null, mapDispatchToProps)(App)
