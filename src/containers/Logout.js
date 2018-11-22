@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-
 class Logout extends React.Component {
 
   logout = (event) => {
@@ -32,7 +31,7 @@ class Logout extends React.Component {
           <div style={menuStyle}>
             <NavLink exact to="/" activeStyle={activeMenuStyle}>Blogs</NavLink>&nbsp;
             <NavLink exact to="/users" activeStyle={activeMenuStyle}>Users</NavLink>&nbsp;
-            <a>{this.props.user.name} logged in &nbsp;</a> <button type="submit">logout</button>
+            <a>{this.props.theUser.name} logged in &nbsp;</a> <button type="submit">logout</button>
           </div>
         </form>
       </div>

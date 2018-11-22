@@ -25,7 +25,7 @@ class Blog extends React.Component {
     })
     blog.likes++
     try {
-      await this.props.likeBlog(blog, this.props.user.token)
+      await this.props.likeBlog(blog, this.props.theUser.token)
     }
     catch (exception) {
       this.props.notify('Error performing like functionality', 'error', 5)
@@ -40,7 +40,7 @@ class Blog extends React.Component {
     })
     try {
       if (window.confirm(`delete ${deleteBlog.title} by ${deleteBlog.author}`)) {        
-        this.props.deleteBlog(deleteBlog, this.props.user.token)
+        this.props.deleteBlog(deleteBlog, this.props.theUser.token)
         window.location.replace('/');
       }
     }
@@ -75,7 +75,7 @@ class Blog extends React.Component {
     let userName = null
     if (blog && blog.user) {
       userName = blog.user.name
-      if (this.props.user && this.props.user.name !== blog.user.name) {
+      if (this.props.theUser && this.props.theUser.name !== blog.user.name) {
         showDeleteButton = { display: 'none' }
       }
     }
@@ -114,12 +114,12 @@ class Blog extends React.Component {
 }
 
 Blog.propTypes = {
-  user: PropTypes.object.isRequired,
   blogId: PropTypes.string.isRequired
 }
 const mapStateToProps = (state) => {
   return {
-    blogs: state.blogs.blogs
+    blogs: state.blogs.blogs,
+    theUser: state.users.user
   }
 }
 const mapDispatchToProps = {

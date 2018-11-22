@@ -3,6 +3,7 @@ import loginService from '../services/login'
 import LoginForm from '../components/LoginForm'
 import Notification from '../components/Notification'
 import { notify } from '../reducers/notificationReducer'
+import { setUser } from '../reducers/userReducer'
 import { connect } from 'react-redux'
 
 class Login extends React.Component {
@@ -29,7 +30,7 @@ class Login extends React.Component {
         username: this.state.username,
         password: this.state.password
       })
-      this.props.login(user)
+      this.props.setUser(user)
     }
     catch (exception) {
       this.props.notify('Invalid username or password', 'error', 5)
@@ -53,4 +54,13 @@ class Login extends React.Component {
   }
 }
 
-export default connect(null, { notify })(Login)
+const mapStateToProps = (state) => {
+  return {
+    theUser: state.users.user
+  }
+}
+const mapDispatchToProps = {
+  notify,
+  setUser
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

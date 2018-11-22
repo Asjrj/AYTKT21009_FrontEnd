@@ -3,11 +3,9 @@ import Blog from '../components/Blog'
 import BlogForm from '../components/BlogForm'
 import Notification from '../components/Notification'
 import Togglable from '../components/Togglable'
-import PropTypes from 'prop-types'
 import { addBlog } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
-
 
 class Blogs extends React.Component {
   constructor(props) {
@@ -54,7 +52,7 @@ class Blogs extends React.Component {
         url: this.state.newUrl
       }
       try {
-        await this.props.addBlog(newBlog, this.props.user.token)
+        await this.props.addBlog(newBlog, this.props.theUser.token)
         this.setState({ newTitle: '' })
         this.setState({ newAuthor: '' })
         this.setState({ newUrl: '' })
@@ -94,12 +92,10 @@ class Blogs extends React.Component {
   }
 }
 
-Blogs.propTypes = {
-  user: PropTypes.object.isRequired
-}
 const mapStateToProps = (state) => {
   return {
-    blogs: state.blogs.blogs
+    blogs: state.blogs.blogs,
+    theUser: state.users.user
   }
 }
 const mapDispatchToProps = {

@@ -5,7 +5,7 @@ const initialState = {
 }
 
 const blogReducer = (state = initialState, action) => {
-  console.log('***BLOG REDUCER ACTION:', action)
+  console.log('*** BLOG REDUCER:', action)
   switch (action.type) {
     case 'INITIALIZE_BLOGS': {
       return {
