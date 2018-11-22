@@ -31,7 +31,7 @@ class App extends React.Component {
     } else {
       return (
         <Router>
-          <div>
+          <div className="container">
             <Logout />
             <Route exact path="/" render={() => <Blogs />} />
             <Route exact path="/blogs/:id" render={({ match }) =>
