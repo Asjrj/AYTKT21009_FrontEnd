@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { Navbar, Nav, NavItem, Button } from 'react-bootstrap'
+import { LinkContainer } from "react-router-bootstrap";
 
 class Logout extends React.Component {
 
@@ -11,30 +12,26 @@ class Logout extends React.Component {
   }
 
   render() {
-    const menuStyle = {
-      fontFamily: 'Arial, Verdana',
-      color: 'green',
-      fontSize: 16,
-      marginBottom: 10,
-      padding: 10
-    }
-    const activeMenuStyle = {
-      fontFamily: 'Arial, Verdana',
-      fontWeight: 'bold',
-      color: 'dark-green',
-      fontSize: 16,
-    }
     return (
       <div>
         <h2>Blogs</h2>
-        <form onSubmit={this.logout}>
-          <div style={menuStyle}>
-            <NavLink exact to="/" activeStyle={activeMenuStyle}>Blogs</NavLink>&nbsp;
-            <NavLink exact to="/users" activeStyle={activeMenuStyle}>Users</NavLink>&nbsp;
-            <a>{this.props.theUser.name} logged in &nbsp;</a> <button type="submit">logout</button>
-          </div>
-        </form>
-      </div>
+        <Navbar fluid>
+          <Nav>
+            <LinkContainer to="/">
+              <NavItem >Blogs</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/users">
+              <NavItem >Users</NavItem>
+            </LinkContainer>
+            <NavItem >{this.props.theUser.name} logged in</NavItem>
+            <NavItem >
+              <Navbar.Form>
+                <Button onClick={this.logout} bsSize='xsmall'>logout</Button>
+              </Navbar.Form>
+            </NavItem>
+          </Nav>
+        </Navbar>
+      </div >
     )
   }
 }

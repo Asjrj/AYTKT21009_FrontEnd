@@ -26,7 +26,9 @@ class App extends React.Component {
   render() {
     if (this.props.theUser === null) {
       return (
-        <Login state={this.state} login={this.login} />
+        <div className="container">
+          <Login state={this.state} login={this.login} />
+        </div>
       )
     } else {
       return (
@@ -34,8 +36,8 @@ class App extends React.Component {
           <div className="container">
             <Logout />
             <Route exact path="/" render={() => <Blogs />} />
-            <Route exact path="/blogs/:id" render={({ match }) =>
-              <Blog blogId={match.params.id} ></Blog>}
+            <Route exact path="/blogs/:id" render={({ match, history }) =>
+              <Blog blogId={match.params.id} history={history}></Blog>}
             />
             <Route exact path="/users" render={() => <Users />} />
             <Route exact path="/users/:id" render={({ match }) =>

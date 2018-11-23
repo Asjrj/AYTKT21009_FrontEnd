@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
 class User extends React.Component {
 
@@ -26,9 +27,9 @@ class User extends React.Component {
       <div>
         <h2>{theUser.name}</h2>
         <h3>Added blogs</h3>
-        <ul>
-          {this.getTheBlogs(this.props.userId).map(blog => <li key={blog.id}>{blog.title} by {blog.author}</li>)}
-        </ul>
+        <ListGroup>
+          {this.getTheBlogs(this.props.userId).map(blog => <ListGroupItem key={blog.id}>{blog.title} by {blog.author}</ListGroupItem>)}
+        </ListGroup>
       </div>
     )
   }

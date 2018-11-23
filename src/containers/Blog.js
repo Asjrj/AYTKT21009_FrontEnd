@@ -4,6 +4,7 @@ import { likeBlog, deleteBlog, commentBlog } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { ListGroup, ListGroupItem, Button, FormGroup, FormControl } from 'react-bootstrap'
 
 class Blog extends React.Component {
   constructor(props) {
@@ -39,9 +40,9 @@ class Blog extends React.Component {
       return element.id === delId
     })
     try {
-      if (window.confirm(`delete ${deleteBlog.title} by ${deleteBlog.author}`)) {        
+      if (window.confirm(`delete ${deleteBlog.title} by ${deleteBlog.author}`)) {
+        this.props.history.push('/')
         this.props.deleteBlog(deleteBlog, this.props.theUser.token)
-        window.location.replace('/');
       }
     }
     catch (exception) {
@@ -94,16 +95,17 @@ class Blog extends React.Component {
           </div>
           <div>
             <h3>Comments</h3>
-            <ul>
-              {blog.comments.map(comment => <li key={comment}>{comment}</li>)}
-            </ul>
+            <ListGroup>
+              {blog.comments.map(comment => <ListGroupItem key={comment}>{comment}</ListGroupItem>)}
+            </ListGroup>
           </div>
-          <form >
+          <FormGroup>
             <div>
-              <input type="text" value={this.state.newComment} onChange={this.handleCommentChange} />
-              <button id={blog.id} onClick={this.commentThisBlog}>add comment</button>
+              <FormControl type="text" value={this.state.newComment} onChange={this.handleCommentChange} />
+              <br />
+              <Button id={blog.id} onClick={this.commentThisBlog} bsStyle="primary" block>add comment</Button>
             </div>
-          </form>
+            </FormGroup>
         </div>
       )
     }
