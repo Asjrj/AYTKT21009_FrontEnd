@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Blog from './Blog'
 
 describe.only('<Blog />', () => {
@@ -38,7 +38,7 @@ describe.only('<Blog />', () => {
   console.log('*** button exists:', blogComponent.exists('button'))
 
   it('only title and author are visible (no button is rendered)', () => {
-    expect(blogComponent.exists('button')).toBe(false);
+    expect(blogComponent.exists('button')).toBe(false)
   })
 
   const line = blogComponent.find('[id="123"]')

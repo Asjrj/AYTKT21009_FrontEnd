@@ -6,7 +6,6 @@ const initialState = {
 }
 
 const userReducer = (state = initialState, action) => {
-  console.log('*** USER REDUCER:', action)
   switch (action.type) {
     case 'INITIALIZE': {
       return {
@@ -18,7 +17,7 @@ const userReducer = (state = initialState, action) => {
       let userId = action.data.user._id
       let user = state.users.find((element) => element.id === userId)
       let newUsers = state.users.filter((element) => element.id !== userId)
-      let newBlog = {_id: action.data.id, title: action.data.title, author: action.data.author, likes: action.data.likes}
+      let newBlog = { _id: action.data.id, title: action.data.title, author: action.data.author, likes: action.data.likes }
       user.blogs.push(newBlog)
       newUsers.push(user)
       return {
@@ -29,7 +28,7 @@ const userReducer = (state = initialState, action) => {
     case 'DELETE_BLOG': {
       let userId = action.data.user._id
       let user = state.users.find((element) => element.id === userId)
-      let newUsers = state.users.filter((element) => element.id !== userId)      
+      let newUsers = state.users.filter((element) => element.id !== userId)
       let newBlogs = user.blogs.filter((element) => element._id !== action.data.id)
       user.blogs = newBlogs
       newUsers.push(user)

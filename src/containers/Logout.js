@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Navbar, Nav, NavItem, Button } from 'react-bootstrap'
-import { LinkContainer } from "react-router-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap'
 
 class Logout extends React.Component {
 
   logout = (event) => {
     event.preventDefault()
     window.localStorage.removeItem('blogUser')
-    window.location.replace('/');
+    window.location.replace('/')
   }
 
   render() {
@@ -17,10 +17,10 @@ class Logout extends React.Component {
         <h2>Blogs</h2>
         <Navbar fluid>
           <Nav>
-            <LinkContainer to="/">
+            <LinkContainer to='/'>
               <NavItem >Blogs</NavItem>
             </LinkContainer>
-            <LinkContainer to="/users">
+            <LinkContainer to='/users'>
               <NavItem >Users</NavItem>
             </LinkContainer>
             <NavItem >{this.props.theUser.name} logged in</NavItem>

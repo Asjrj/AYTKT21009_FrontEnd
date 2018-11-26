@@ -7,25 +7,25 @@ const getAll = () => {
 }
 
 const addBlog = async (newBlog, token) => {
-  const response = await axios.post(baseUrl, newBlog, { headers: { Authorization: "Bearer " + token } })
+  const response = await axios.post(baseUrl, newBlog, { headers: { Authorization: 'Bearer ' + token } })
   return response.data
 }
 
 const likeBlog = async (newBlog, token) => {
   const putUrl = baseUrl + '/' + newBlog.id
-  const response = await axios.put(putUrl, newBlog, { headers: { Authorization: "Bearer " + token } })
+  const response = await axios.put(putUrl, newBlog, { headers: { Authorization: 'Bearer ' + token } })
   return response.data
 }
 
 const deleteBlog = async (blogId, token) => {
   const delUrl = baseUrl + '/' + blogId
-  const response = await axios.delete(delUrl, { headers: { Authorization: "Bearer " + token } })
+  const response = await axios.delete(delUrl, { headers: { Authorization: 'Bearer ' + token } })
   return response.data
 }
 
 const commentBlog = async (blogId, comment) => {
   const postUrl = baseUrl + '/' + blogId + '/comments'
-  const newComment = {comment: comment}
+  const newComment = { comment: comment }
   const response = await axios.post(postUrl, newComment)
   return response.data
 }

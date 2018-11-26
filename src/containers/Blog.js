@@ -22,7 +22,7 @@ class Blog extends React.Component {
   likeThisBlog = async (event) => {
     event.preventDefault()
     let blog = this.props.blogs.find((element) => {
-      return element.id === event.target.getAttribute("id")
+      return element.id === event.target.getAttribute('id')
     })
     blog.likes++
     try {
@@ -35,7 +35,7 @@ class Blog extends React.Component {
 
   deleteThisBlog = async (event) => {
     event.preventDefault()
-    let delId = event.target.getAttribute("id")
+    let delId = event.target.getAttribute('id')
     let deleteBlog = this.props.blogs.find((element) => {
       return element.id === delId
     })
@@ -52,7 +52,7 @@ class Blog extends React.Component {
 
   commentThisBlog = async (event) => {
     event.preventDefault()
-    let blogId = event.target.getAttribute("id")
+    let blogId = event.target.getAttribute('id')
     let blog = this.props.blogs.find((element) => {
       return element.id === blogId
     })
@@ -101,11 +101,11 @@ class Blog extends React.Component {
           </div>
           <FormGroup>
             <div>
-              <FormControl type="text" value={this.state.newComment} onChange={this.handleCommentChange} />
+              <FormControl type='text' value={this.state.newComment} onChange={this.handleCommentChange} />
               <br />
-              <Button id={blog.id} onClick={this.commentThisBlog} bsStyle="primary" block>add comment</Button>
+              <Button id={blog.id} onClick={this.commentThisBlog} bsStyle='primary' block>add comment</Button>
             </div>
-            </FormGroup>
+          </FormGroup>
         </div>
       )
     }

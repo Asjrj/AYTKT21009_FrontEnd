@@ -46,7 +46,7 @@ class Blogs extends React.Component {
         return
       }
       const newBlog = {
-        id: "123",
+        id: '123',
         title: this.state.newTitle,
         author: this.state.newAuthor,
         url: this.state.newUrl
@@ -78,7 +78,7 @@ class Blogs extends React.Component {
             />
           )}
         <h2>Create new</h2>
-        <Togglable buttonLabel="new blog" ref={component => this.blogForm = component}>
+        <Togglable buttonLabel='new blog' ref={component => this.blogForm = component}>
           <BlogForm
             tila={this.state}
             handleTitleChange={this.handleTitleChange()}

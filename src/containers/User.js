@@ -17,7 +17,7 @@ class User extends React.Component {
       if (element.user && element.user._id === userId) {
         theBlogs.push(element)
       }
-    });
+    })
     return (theBlogs)
   }
 
