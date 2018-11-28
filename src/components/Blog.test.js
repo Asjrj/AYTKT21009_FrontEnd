@@ -31,28 +31,20 @@ describe.only('<Blog />', () => {
     currentUser={user}
   />)
 
-  const detailDiv = blogComponent.find('.blogDetail')
-  console.log('*** detailDiv:', detailDiv.debug())
-  const button = blogComponent.find('button')
-  console.log('*** button:', button.debug())
-  console.log('*** button exists:', blogComponent.exists('button'))
+  //console.log('*** blogComponent', blogComponent.debug())
+  //const detailDiv = blogComponent.find('.blogDetail')
+  //console.log('*** detailDiv:', detailDiv.debug())
+  const comp1 = blogComponent.find('Link')
+  //console.log('*** Link:', comp1.debug())
+  //console.log('*** Link exists:', blogComponent.exists('Link'))
 
-  it('only title and author are visible (no button is rendered)', () => {
-    expect(blogComponent.exists('button')).toBe(false)
+  it('link to blog details exists', () => {
+    expect(blogComponent.exists('Link')).toBe(true)
   })
 
-  const line = blogComponent.find('[id="123"]')
-
-  console.log('*** line:', line.debug())
-  line.simulate('click', { preventDefault: {}, target: { id: '123' } })
-  console.log('*** Clicked times', mockBlogVisibility.mock.calls.length)
-  expect(mockBlogVisibility.mock.calls.length).toBe(1)
-
-  const detailDiv2 = blogComponent.find('.blogDetail')
-  console.log('*** detailDiv2:', detailDiv2.debug())
-
-  it('more information is now rendered (url)', () => {
-    expect(detailDiv2.text()).toContain(blog.url)
+  it('blog title and author are now rendered', () => {
+    expect(comp1.debug()).toContain(blog.title)
+    expect(comp1.debug()).toContain(blog.author)
   })
 
 })

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { ListGroup, ListGroupItem, Button, FormGroup, FormControl } from 'react-bootstrap'
 
-class Blog extends React.Component {
+export class Blog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

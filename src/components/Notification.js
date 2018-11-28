@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Alert } from 'react-bootstrap'
 
 
-class Notification extends React.Component {
+export class Notification extends React.Component {
   render() {
     if (this.props.notification === null || this.props.notification === '') {
       return <div></div>

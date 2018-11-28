@@ -12,9 +12,9 @@ describe.only('<SimpleBlog />', () => {
   const mockHandler = jest.fn()
 
   const blogComponent = shallow(<SimpleBlog blog={blog} onClick={mockHandler} />)
-  console.log('*** blogComponent:', blogComponent.debug())
+  //console.log('*** blogComponent:', blogComponent.debug())
   const blogLineDiv = blogComponent.find('.BlogLine')
-  console.log('*** blogLineDiv:', blogLineDiv.debug())
+  //console.log('*** blogLineDiv:', blogLineDiv.debug())
   it('title is rendered', () => {
     expect(blogLineDiv.text()).toContain(blog.title)
   })
@@ -23,13 +23,13 @@ describe.only('<SimpleBlog />', () => {
   })
 
   const likesDiv = blogComponent.find('#likesDiv')
-  console.log('*** likesDiv:', likesDiv.debug())
+  //console.log('*** likesDiv:', likesDiv.debug())
   it('likes is rendered', () => {
     expect(likesDiv.text()).toContain(blog.likes)
   })
 
   const button = blogComponent.find('button')
-  console.log('*** button', button.debug())
+  //console.log('*** button', button.debug())
   button.simulate('click')
   button.simulate('click')
   it('like -button is clicked twice', () => {

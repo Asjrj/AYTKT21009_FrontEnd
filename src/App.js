@@ -11,7 +11,7 @@ import { initializeUsers, setUser } from './reducers/userReducer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 
-class App extends React.Component {
+export class App extends React.Component {
 
   async componentDidMount() {
     await this.props.initializeBlogs()
@@ -27,7 +27,7 @@ class App extends React.Component {
     if (this.props.theUser === null) {
       return (
         <div className="container">
-          <Login state={this.state} login={this.login} />
+          <Login />
         </div>
       )
     } else {
