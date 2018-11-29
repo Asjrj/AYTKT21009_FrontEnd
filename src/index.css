@@ -22,6 +22,14 @@ body {
   margin-bottom: 6px;
 }
 
+.blogList {
+  font-size: 16px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
+  margin: 5px;
+}
+
 .blogDetail {
   font-size: 16px;
   border-style: solid;

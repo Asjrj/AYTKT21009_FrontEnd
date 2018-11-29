@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 const Blog = ({ blog }) => {
   return (
-    <div className='blogDetail'>
-      <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link><br />
+    <div className='blogList'>
+      <Link id='detailLink' to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link><br />
     </div>
   )
 }

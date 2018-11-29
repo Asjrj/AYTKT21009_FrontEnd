@@ -32,7 +32,7 @@ describe.only('<Blog />', () => {
   />)
 
   //console.log('*** blogComponent', blogComponent.debug())
-  //const detailDiv = blogComponent.find('.blogDetail')
+  //const detailDiv = blogComponent.find('.blogList')
   //console.log('*** detailDiv:', detailDiv.debug())
   const comp1 = blogComponent.find('Link')
   //console.log('*** Link:', comp1.debug())
