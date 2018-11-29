@@ -19,8 +19,6 @@ const blogReducer = (state = initialState, action) => {
       }
     }
     case 'DELETE_BLOG': {
-      console.log('***')
-      console.log('***')
       return {
         blogs: state.blogs.filter(element => element.id !== action.data.id)
       }

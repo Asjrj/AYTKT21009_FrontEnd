@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import loginService from '../services/login'
 import LoginForm from '../components/LoginForm'

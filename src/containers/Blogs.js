@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import Blog from '../components/Blog'
 import BlogForm from '../components/BlogForm'

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import Notification from '../components/Notification'
 import { likeBlog, deleteBlog, commentBlog } from '../reducers/blogReducer'
