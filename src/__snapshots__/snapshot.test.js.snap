@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<User /> renders correctly 1`] = `
+<div>
+  <h2>
+    Kalle Käyttäjä
+  </h2>
+  <h3>
+    Added blogs
+  </h3>
+  <ul
+    className="list-group"
+  >
+    <li
+      className="list-group-item"
+    >
+      Snapshot otsikko
+       by 
+      Snapshot kirjoittaja
+    </li>
+    <li
+      className="list-group-item"
+    >
+      Uusi otsikko
+       by 
+      Uusi Kirjoittaja
+    </li>
+  </ul>
+</div>
+`;

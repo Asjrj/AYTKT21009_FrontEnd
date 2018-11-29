@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
-class User extends React.Component {
+export class User extends React.Component {
 
   logout = (event) => {
     event.preventDefault()
